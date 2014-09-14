@@ -1,5 +1,7 @@
 ## The makeCacheMatrix creates a matrix with supporting methods to 
 ## support getting/setting the matrix and it's cached inverse
+## The cacheSolve method calculates and caches the inverse if its not
+## cached and then returns the inverse
 
 ## The makeCacheMatrix creates an object that can cache it's inverse
 ## The function takes one argument which should be an invertible matrix
