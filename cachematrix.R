@@ -1,7 +1,7 @@
-## The makeCacheMatrix creates a matrix with supporting methods to 
-## support getting/setting the matrix and it's cached inverse
+## The makeCacheMatrix creates a matrix with supporting methods for
+## getting/setting the matrix and it's cached inverse
 ## The cacheSolve method calculates and caches the inverse if its not
-## cached and then returns the inverse
+## cached and returns the inverse
 
 ## The makeCacheMatrix creates an object that can cache it's inverse
 ## The function takes one argument which should be an invertible matrix
@@ -27,9 +27,16 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## The cacheSolve function returns the inverse of the matrix argument. 
-## It computes the inverse if it is not available, caches the inverse in the enhanced
-## matrix object and returns it. If the cached inverse of the matrix is 
+## It computes the inverse, if it has not been computed/cached using the solve function, 
+## caches the inverse and returns the inverse. If the cached inverse of the matrix is 
 ## available then the cached is returned.
+##
+## It's arguments are the enhanced matrix objects returned from
+## the makeCacheMatrix and variable arguments that are passed
+## to the 'solve()' method
+##
+## If the matrix's determinant is not availble or zero, it invokes 'stop'
+## with a message referring to the error
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x' if it cached
