@@ -1,16 +1,22 @@
-## The makeCacheMatrix creates a matrix with supporting methods for
-## getting/setting the matrix and it's cached inverse
+## The makeCacheMatrix creates an object with supporting methods for
+## getting/setting the matrix and it's inverse.
 ## The cacheSolve method calculates and caches the inverse if its not
-## cached and returns the inverse
+## cached and returns the inverse.
 
-## The makeCacheMatrix creates an object that can cache it's inverse
+## The makeCacheMatrix creates an object that can cache it's inverse. 
+## It provides methods to get and set the matrix and it's inverse.
 ## The function takes one argument which should be an invertible matrix
 
 makeCacheMatrix <- function(x = matrix()) {
         
+        validateInvertible(x)
+        
         inverse <- NULL
         
         set <- function(mtx) {
+                
+                validateInvertible(mtx)
+                
                 x <<- mtx
                 inverse <<- NULL
         }
@@ -41,20 +47,30 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x' if it cached
         inverse <- x$getInverse()
-        if ( !is.null(inverse)) {
+        if ( !is.null(inverse) ) {
                 message("returning cached solve value")
                 return (inverse)
         }
         
         ## Compute the inverse, cache it and return the inverse
         mat <- x$get()
-        
-        if ( det(mat) == 0 || is.na(det(mat) )) {
-                stop("Matrix is not invertible since det is zero or NA")
-        }
+
+        ## Validate matrix is invertible
+        validateInvertible(mat)
         
         inv <- solve(mat,...)
         x$setInverse(inv)
 
         inv
+}
+
+## Helper method to check if the argument is a matrix and has a determinant
+validateInvertible <- function(mat) {
+        if ( !is.matrix(mat) ) {
+                stop("The argument should be a matrix")
+        }
+
+        if ( det(mat) == 0 || is.na(det(mat) )) {
+                stop("Matrix is not invertible since det is zero or NA")
+        }
 }
